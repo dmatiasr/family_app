@@ -15,7 +15,7 @@ class Service(models.Model):
     description = models.TextField()
     technician = models.CharField(null=True, max_length=50)
     price = models.CharField(max_length=50)
-    related_vehicle = models.ForeignKey(Automovil, null=True, blank=True, on_delete=models.SET_NULL)
+    related_vehicle = models.ForeignKey(Automovil, null=True, blank=True, default="None", on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
