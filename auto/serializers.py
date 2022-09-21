@@ -6,4 +6,4 @@ from .models import Automovil
 class VehicleSerializer(serializers.Serializer):
     class Meta:
         model = Automovil
-        fields = ("name", "matricula") 
+        fields = ("name", "matricula")
