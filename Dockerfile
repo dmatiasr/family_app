@@ -7,7 +7,7 @@ FROM python:3.9
 ENV PYTHONUNBUFFERED 1
 
 # Get the Real World example app
-RUN git clone https://github.com/dmatiasr/family_app.git  /deb/app
+RUN git clone https://github.com/dmatiasr/family_app.git  --branch dockerize /deb/app
 
 # Set the working directory to /drf
 # NOTE: all the directives that follow in the Dockerfile will be executed in
