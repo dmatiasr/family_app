@@ -7,8 +7,8 @@ FROM python:3.9
 ENV PYTHONUNBUFFERED 1
 
 # Get the Real World example app
-RUN git clone https://github.com/dmatiasr/family_app.git  --branch dockerize /deb/app
-
+RUN git clone https://github.com/dmatiasr/family_app /deb/app
+RUN cd /deb/app && git checkout dockerize
 # Set the working directory to /drf
 # NOTE: all the directives that follow in the Dockerfile will be executed in
 # that directory.
@@ -23,5 +23,5 @@ VOLUME /deb/app
 
 EXPOSE 8080
 
-CMD python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000
 # CMD ["%%CMD%%"]
