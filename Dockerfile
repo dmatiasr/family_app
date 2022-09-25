@@ -8,7 +8,10 @@ ENV PYTHONUNBUFFERED 1
 
 # Get the Real World example app
 RUN git clone https://github.com/dmatiasr/family_app /deb/app
-RUN cd /deb/app && git checkout dockerize
+
+# how to change to the current branch?
+# for now, apply manually.
+RUN cd /deb/app && git checkout unit_test_stage_1
 # Set the working directory to /drf
 # NOTE: all the directives that follow in the Dockerfile will be executed in
 # that directory.

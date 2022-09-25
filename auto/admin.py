@@ -1,6 +1,6 @@
 from django.contrib import admin
 from auto.models import (
-    Automovil, 
+    Automovil,
     Service,
 )
 

@@ -8,28 +8,52 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Automovil',
+            name="Automovil",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('matricula', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("matricula", models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='Service',
+            name="Service",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('applied_date', models.DateField()),
-                ('name', models.CharField(max_length=50, null=True)),
-                ('description', models.TextField()),
-                ('technician', models.CharField(max_length=50, null=True)),
-                ('price', models.CharField(max_length=50)),
-                ('related_vehicle', models.ForeignKey(blank=True, default='None', null=True, on_delete=django.db.models.deletion.SET_NULL, to='auto.automovil')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("applied_date", models.DateField()),
+                ("name", models.CharField(max_length=50, null=True)),
+                ("description", models.TextField()),
+                ("technician", models.CharField(max_length=50, null=True)),
+                ("price", models.CharField(max_length=50)),
+                (
+                    "related_vehicle",
+                    models.ForeignKey(
+                        blank=True,
+                        default="None",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="auto.automovil",
+                    ),
+                ),
             ],
         ),
     ]
