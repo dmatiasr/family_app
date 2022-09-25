@@ -6,7 +6,7 @@ from . import views
 
 
 router = routers.DefaultRouter()
-router.register("autos", viewset=views.VehicleViewSet)
+router.register("vehicles", viewset=views.VehicleViewSet, basename="vehicles")
 
 
 urlpatterns = [
