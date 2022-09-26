@@ -11,9 +11,9 @@ class Automovil(models.Model):
 
 class Service(models.Model):
     applied_date = models.DateField()
-    name = models.CharField(null=True, max_length=50)
+    name = models.CharField(default="", max_length=50)
     description = models.TextField()
-    technician = models.CharField(null=True, max_length=50)
+    technician = models.CharField(default="", max_length=50)
     price = models.CharField(max_length=50)
     related_vehicle = models.ForeignKey(
         Automovil, null=True, blank=True, default="None", on_delete=models.SET_NULL
