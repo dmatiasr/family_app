@@ -5,8 +5,9 @@ jobs:
                 name: deploy app
                 runs-on: ubuntu-latest
                 steps:
-                        - uses: actions/checkout@master
                         - name: build and push to dockerhub
+                          uses: actions/checkout@master
+                        - name: push to docker-hub
                           uses: docker/build-push-action@v2
                           with:
                                   username: ${{ secrets.DOCKER_USERNAME }}
