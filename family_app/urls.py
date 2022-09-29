@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import (
-    include, 
+    include,
     path,
 )
 
@@ -23,7 +23,7 @@ from auto import urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    path('', include(urls)),
+    path("", include(urls)),
 ]
