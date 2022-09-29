@@ -9,10 +9,8 @@ vehicle_url_list = reverse("vehicles-list")
 
 
 @pytest.mark.django_db
-def test_zero_vehicles_should_return_empty_list(client, django_user_model) -> None:
-    uname, passwd = "foo", "bar"
-    user = django_user_model.objects.create_user(username=uname, password=passwd)
-    client.force_login(user)
+def test_zero_vehicles_should_return_empty_list(client, existing_user) -> None:
+    client.force_login(existing_user)
     response = client.get(vehicle_url_list)
 
     assert response.status_code == 200
@@ -20,13 +18,9 @@ def test_zero_vehicles_should_return_empty_list(client, django_user_model) -> No
 
 
 @pytest.mark.django_db
-def test_one_company_exists_should_succeed(client, django_user_model) -> None:
+def test_one_company_exists_should_succeed(client, existing_user) -> None:
     vehicle = Automovil.objects.create(name="Siena", matricula="IGQ549")
-
-    uname, passwd = "foo", "bar"
-    user = django_user_model.objects.create_user(username=uname, password=passwd)
-    client.force_login(user)
-
+    client.force_login(existing_user)
     response = client.get(vehicle_url_list)
 
     assert response.status_code == 200
