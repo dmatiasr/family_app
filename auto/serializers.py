@@ -13,7 +13,9 @@ class VehicleSerializer(serializers.ModelSerializer):
 
 
 class ServiceSerializer(serializers.ModelSerializer):
-    related_vehicle = serializers.SlugRelatedField(slug_field="matricula", queryset=Automovil.objects.all())
+    related_vehicle = serializers.SlugRelatedField(
+        slug_field="matricula", queryset=Automovil.objects.all()
+    )
 
     class Meta:
         model = Service

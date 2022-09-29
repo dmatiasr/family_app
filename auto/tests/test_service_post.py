@@ -3,10 +3,7 @@ import json
 from django.urls import reverse
 from rest_framework import status
 
-from auto.models import (
-    Automovil,
-    Service,
-)
+from auto.models import Automovil
 
 service_url_list = reverse("services-list")
 
