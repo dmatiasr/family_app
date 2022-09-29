@@ -6,6 +6,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register("vehicles", viewset=views.VehicleViewSet, basename="vehicles")
+router.register("services", viewset=views.ServiceViewSet, basename="services")
 
 
 urlpatterns = [

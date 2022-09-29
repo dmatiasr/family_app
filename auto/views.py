@@ -4,8 +4,14 @@ from rest_framework import (
 )
 from rest_framework.response import Response
 
-from .models import Automovil
-from .serializers import VehicleSerializer
+from .models import (
+    Automovil,
+    Service,
+)
+from .serializers import (
+    VehicleSerializer,
+    ServiceSerializer,
+)
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -23,3 +29,9 @@ class VehicleViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.prefetch_related("related_vehicle")
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
