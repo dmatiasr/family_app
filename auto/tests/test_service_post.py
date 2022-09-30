@@ -5,20 +5,30 @@ from rest_framework import status
 
 from auto.models import Automovil
 
+
 service_url_list = reverse("services-list")
 
 
-def test_create_services_without_params_should_fail(client, existing_user):
+def test_post_unauthenticated_user(client):
+    response = client.post(path=service_url_list)
+    content = json.loads(response.content)
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert content["detail"] == "Authentication credentials were not provided."
+
+
+def test_create_services_without_params_should_fail(
+    client, existing_user, required_field_text
+):
     client.force_login(existing_user)
 
     response = client.post(path=service_url_list)
     content = json.loads(response.content)
 
-    required_fields = ["This field is required."]
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert content.get("applied_date") == required_fields
-    assert content.get("description") == required_fields
-    assert content.get("price") == required_fields
+    assert content.get("applied_date") == required_field_text
+    assert content.get("description") == required_field_text
+    assert content.get("price") == required_field_text
 
 
 def test_creation_is_succeeded(client, existing_user):

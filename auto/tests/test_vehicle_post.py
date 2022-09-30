@@ -9,17 +9,25 @@ from auto.models import Automovil
 vehicle_url_list = reverse("vehicles-list")
 
 
-def test_create_vehicle_without_params_should_fail(client, existing_user):
+def test_post_unauthenticated_user(client):
+    response = client.post(path=vehicle_url_list)
+    content = json.loads(response.content)
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert content["detail"] == "Authentication credentials were not provided."
+
+
+def test_create_vehicle_without_params_should_fail(
+    client, existing_user, required_field_text
+):
     client.force_login(existing_user)
 
     response = client.post(path=vehicle_url_list)
     content = json.loads(response.content)
 
-    required_fields = ["This field is required."]
-
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert content.get("name") == required_fields
-    assert content.get("matricula") == required_fields
+    assert content.get("name") == required_field_text
+    assert content.get("matricula") == required_field_text
 
 
 def test_create_repeated_matricula_should_be_fail(client, existing_user):
