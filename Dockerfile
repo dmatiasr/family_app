@@ -11,7 +11,7 @@ RUN git clone https://github.com/dmatiasr/family_app /deb/app
 
 # how to change to the current branch?
 # for now, apply manually.
-RUN cd /deb/app && git checkout service_endpoint
+RUN cd /deb/app && git checkout master
 # Set the working directory to /drf
 # NOTE: all the directives that follow in the Dockerfile will be executed in
 # that directory.
