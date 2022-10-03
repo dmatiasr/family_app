@@ -1,7 +1,7 @@
 import json
 
-import pytest
 from django.urls import reverse
+from rest_framework import status
 
 from auto.models import Automovil
 
@@ -9,25 +9,29 @@ from auto.models import Automovil
 vehicle_url_list = reverse("vehicles-list")
 
 
-@pytest.mark.django_db
-def test_create_vehicle_without_params_should_fail(client, django_user_model):
-    uname, passwd = "foo", "bar"
-    user = django_user_model.objects.create_user(username=uname, password=passwd)
-    client.force_login(user)
+def test_post_unauthenticated_user(client):
+    response = client.post(path=vehicle_url_list)
+    content = json.loads(response.content)
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert content["detail"] == "Authentication credentials were not provided."
+
+
+def test_create_vehicle_without_params_should_fail(
+    client, existing_user, required_field_text
+):
+    client.force_login(existing_user)
 
     response = client.post(path=vehicle_url_list)
     content = json.loads(response.content)
 
-    assert response.status_code == 400
-    assert content.get("name") == ["This field is required."]
-    assert content.get("matricula") == ["This field is required."]
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert content.get("name") == required_field_text
+    assert content.get("matricula") == required_field_text
 
 
-@pytest.mark.django_db
-def test_create_repeated_matricula_should_be_fail(client, django_user_model):
-    uname, passwd = "foo", "bar"
-    user = django_user_model.objects.create_user(username=uname, password=passwd)
-    client.force_login(user)
+def test_create_repeated_matricula_should_be_fail(client, existing_user):
+    client.force_login(existing_user)
 
     name, repeated_matricula = "Siena", "IGQ549"
     vehicle = Automovil.objects.create(name=name, matricula=repeated_matricula)
@@ -37,17 +41,14 @@ def test_create_repeated_matricula_should_be_fail(client, django_user_model):
     )
 
     vehicle.delete()
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert json.loads(response.content).get("matricula") == [
         "automovil with this matricula already exists."
     ]
 
 
-@pytest.mark.django_db
-def test_creation_is_succeeded(client, django_user_model):
-    uname, passwd = "foo", "bar"
-    user = django_user_model.objects.create_user(username=uname, password=passwd)
-    client.force_login(user)
+def test_creation_is_succeeded(client, existing_user):
+    client.force_login(existing_user)
 
     name, matricula = "Siena", "IGQ549"
 
@@ -55,6 +56,6 @@ def test_creation_is_succeeded(client, django_user_model):
         path=vehicle_url_list, data={"name": name, "matricula": matricula}
     )
     content = json.loads(response.content)
-    assert response.status_code == 201
+    assert response.status_code == status.HTTP_201_CREATED
     assert content.get("name") == name
     assert content.get("matricula") == matricula
